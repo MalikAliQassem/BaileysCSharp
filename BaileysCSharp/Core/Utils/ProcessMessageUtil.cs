@@ -100,7 +100,7 @@ namespace BaileysCSharp.Core.Utils
                                 data.IsLatest = isLatest;
                                 ev.Emit(EmitType.Set, data);
                             }
-                            
+
                         }
                         break;
                     case Message.Types.ProtocolMessage.Types.Type.AppStateSyncKeyShare:
@@ -137,11 +137,16 @@ namespace BaileysCSharp.Core.Utils
                                 if (retryResponse != null)
                                 {
                                     var webMessageInfo = WebMessageInfo.Parser.ParseFrom(retryResponse.WebMessageInfoBytes);
-                                    ev.Emit(EmitType.Update,new MessageEventModel(MessageEventType.Update, webMessageInfo));
+                                    ev.Emit(EmitType.Update, new MessageEventModel(MessageEventType.Update, webMessageInfo));
                                 }
                             }
                         }
                         break;
+                    case Message.Types.ProtocolMessage.Types.Type.MessageEdit:
+                        var editerResponse = protocolMsg.EditedMessage;
+                        break;
+                            
+
                 }
             }
             else if (content?.ReactionMessage != null)
